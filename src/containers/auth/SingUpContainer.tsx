@@ -49,7 +49,7 @@ export function SingUpContainer() {
         setIsOpen(true);
         setStatus({
           name: 'Success',
-          message: 'Successfully! You are registred',
+          message: 'Successfully! You are registered',
         });
         setCurrentUser('userId', user.uid);
       })

@@ -7,7 +7,7 @@ export const email = {
 
 export const password = { required: true, minLength: 6 };
 
-export const text = { required: true, minLength: 1, maxLength: 10 };
+export const text = { required: true, minLength: 1, maxLength: 15 };
 
 export function isValid(
   obj: { [x: string]: FieldError | undefined },
@@ -17,11 +17,11 @@ export function isValid(
 }
 
 export const messageInform: { [key: string]: string } = {
-  password: 'This is required minimum 6 symbols',
-  email: 'This is required',
-  title: 'This is required',
-  description: 'This is required',
-  'new word': 'This is required',
-  translation: 'This is required',
-  name: 'This is required',
+  password: 'The field is required: min 6 symbols',
+  email: 'The field is required',
+  title: 'The field is required',
+  description: 'The field is required',
+  'new word': 'The field is required',
+  translation: 'The field is required',
+  name: 'The field is required',
 };

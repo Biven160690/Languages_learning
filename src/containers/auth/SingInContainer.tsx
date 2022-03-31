@@ -44,7 +44,7 @@ export function SingInContainer() {
         setIsOpen(true);
         setStatus({
           name: 'Success',
-          message: 'Successfully! You are logged in',
+          message: 'Successfully! You are logged in!',
         });
         setCurrentUser('userId', user.uid);
       })
