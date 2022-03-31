@@ -55,7 +55,7 @@ export function SingUpContainer() {
       })
       .catch((error) => {
         setIsLoading(false);
-        setStatus(new Error(error));
+        setStatus(error);
         setIsOpen(true);
       });
   }
