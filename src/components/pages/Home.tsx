@@ -10,18 +10,17 @@ export function Home() {
       <main>
         Spaced repetition is a technique for scheduling when you should study
         material that you want to commit to memory. Flashcard apps like Fresh
-        Cards use a spaced repetition algorithm to optimize your learning so //
-        eslint-disable-next-line react/no-unescaped-entities that you don`t have
-        to study everything every day. If you are studying a new language, you
-        will need to memorize hundreds or thousands of new words, but it
-        wouldon`t make sense to review hundreds of words every single day. At
-        some point, your memory of a word is good enough and you don`t need to
-        review it. However, given enough time without practice, your memory of
-        the word would slowly disappear. Here`s where a spaced repetition
-        algorithm comes in. After you learn a piece of information for the first
-        time, your memory of that information will gradually decay until
-        eventually it`s forgotten. A spaced repetition algorithm attempts to
-        model that decay and predict when you are likely to forget. It then
+        Cards use a spaced repetition algorithm to optimize your learning so
+        that you don`t have to study everything every day. If you are studying a
+        new language, you will need to memorize hundreds or thousands of new
+        words, but it wouldon`t make sense to review hundreds of words every
+        single day. At some point, your memory of a word is good enough and you
+        don`t need to review it. However, given enough time without practice,
+        your memory of the word would slowly disappear. Here`s where a spaced
+        repetition algorithm comes in. After you learn a piece of information
+        for the first time, your memory of that information will gradually decay
+        until eventually it`s forgotten. A spaced repetition algorithm attempts
+        to model that decay and predict when you are likely to forget. It then
         computes the optimum time in the future to review so that you can
         &quot;boost&quot; your memory again. After that &quot;boost&quot;, your
         memory will be good again. The good news is that each time you give your
@@ -43,8 +42,8 @@ export function Home() {
       <p>
         {!auth.currentUser && (
           <strong>
-            If you want to study, you need to <Link to='/singIn'>singIn</Link>{' '}
-            in or <Link to='/singUp'>singUp</Link>
+            If you want to study, you need to <Link to='/singIn'>SingIn</Link>{' '}
+            in or <Link to='/singUp'>SingUp</Link>
           </strong>
         )}
       </p>
