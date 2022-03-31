@@ -5,8 +5,8 @@ import { useAuth } from '@hooks';
 interface ProfileActionsProps {
   anchorElUser: HTMLElement | null;
   handleCloseUserMenu: () => void;
-  handleRedirectSingIn: () => void;
-  handleRedirectSingUp: () => void;
+  handleRedirectSignIn: () => void;
+  handleRedirectSignUp: () => void;
   handleClickLogout: () => void;
 }
 
@@ -14,8 +14,8 @@ export function ProfileActions(props: ProfileActionsProps) {
   const {
     anchorElUser,
     handleCloseUserMenu,
-    handleRedirectSingIn,
-    handleRedirectSingUp,
+    handleRedirectSignIn,
+    handleRedirectSignUp,
     handleClickLogout,
   } = props;
 
@@ -38,12 +38,12 @@ export function ProfileActions(props: ProfileActionsProps) {
       onClose={handleCloseUserMenu}>
       {!auth.currentUser && (
         <div>
-          <MenuItem onClick={handleRedirectSingIn}>
+          <MenuItem onClick={handleRedirectSignIn}>
             <Link underline='none'>
               <Typography>SingIn</Typography>
             </Link>
           </MenuItem>
-          <MenuItem onClick={handleRedirectSingUp}>
+          <MenuItem onClick={handleRedirectSignUp}>
             <Link underline='none'>
               <Typography>SingUp</Typography>
             </Link>

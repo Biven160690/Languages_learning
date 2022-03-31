@@ -29,13 +29,13 @@ export function UserProfile() {
     setAnchorElUser(null);
   };
 
-  const handleRedirectSingIn = () => {
-    navigate('/singIn');
+  const handleRedirectSignIn = () => {
+    navigate('/signIn');
     handleCloseUserMenu();
   };
 
-  const handleRedirectSingUp = () => {
-    navigate('/singUp');
+  const handleRedirectSignUp = () => {
+    navigate('/signUp');
     handleCloseUserMenu();
   };
 
@@ -67,8 +67,8 @@ export function UserProfile() {
         <ProfileActions
           anchorElUser={anchorElUser}
           handleCloseUserMenu={handleCloseUserMenu}
-          handleRedirectSingIn={handleRedirectSingIn}
-          handleRedirectSingUp={handleRedirectSingUp}
+          handleRedirectSignIn={handleRedirectSignIn}
+          handleRedirectSignUp={handleRedirectSignUp}
           handleClickLogout={handleClickLogout}
         />
       </Box>

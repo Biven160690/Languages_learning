@@ -1,2 +1,2 @@
-export * from './SingInContainer';
-export * from './SingUpContainer';
+export * from './SignInContainer';
+export * from './SignUpContainer';

@@ -42,8 +42,8 @@ export function Home() {
       <p>
         {!auth.currentUser && (
           <strong>
-            If you want to study, you need to <Link to='/singIn'>SingIn</Link>{' '}
-            in or <Link to='/singUp'>SingUp</Link>
+            If you want to study, you need to <Link to='/signIn'>SignIn</Link>
+            in or <Link to='/signUp'>SignUp</Link>
           </strong>
         )}
       </p>

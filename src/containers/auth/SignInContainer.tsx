@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { NavigateFunction, useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
+import { NavigateFunction, useNavigate } from 'react-router';
 import { LoadingButton } from '@mui/lab';
 
 import { AuthenticationInputs } from '@components/forms/inputs/AuthenticationInputs';
-import { InputField } from '@components/forms/inputs/InputField';
-
-import { useDataManagement, useAuth } from '@hooks';
+import { useAuth } from '@hooks';
 import { useStyles } from '@theme/style';
 
-import { triggerAlert, text, setCurrentUser } from '@helper';
+import { triggerAlert, setCurrentUser } from '@helper';
 
-import { RegistrationData } from '@components/forms/type';
 import { Status } from '@hooks/interface';
+import { LoginData } from '@components/forms/type';
 
-export function SingUpContainer() {
+export function SignInContainer() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -25,37 +23,37 @@ export function SingUpContainer() {
 
   const auth = useAuth();
 
-  const { singUpForm, singUpFormInput, singUpFormButton, singUpFormActions } =
-    useStyles();
-
   const {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<RegistrationData>();
+  } = useForm<LoginData>();
 
   useEffect(() => {
     !isOpen && status?.name === 'Success' && navigate('/decks');
   }, [isOpen, navigate, status]);
 
-  const dataManagement = useDataManagement();
+  const { singInForm, singInFormInput, singInFormButton, singInFormActions } =
+    useStyles();
 
-  function registration(data: RegistrationData) {
+  function login(data: LoginData) {
     setIsLoading(true);
     auth
-      .signUp(data)
+      .signIn(data)
       .then(({ user }) => {
-        dataManagement.addUserDoc(user.uid);
         setIsOpen(true);
         setStatus({
           name: 'Success',
-          message: 'Successfully! You are registered',
+          message: 'Successfully! You are logged in!',
         });
         setCurrentUser('userId', user.uid);
       })
-      .catch((error) => {
+      .catch(() => {
         setIsLoading(false);
-        setStatus(error);
+        setStatus({
+          name: 'Error',
+          message: 'Error! User is not found',
+        });
         setIsOpen(true);
       });
   }
@@ -69,32 +67,23 @@ export function SingUpContainer() {
   return (
     <React.Fragment>
       {isOpen && triggerAlert(alertProps)}
-      <form onSubmit={handleSubmit(registration)}>
-        <div className={singUpForm}>
-          <h2>SingUp</h2>
-          <div className={singUpFormActions}>
-            <div className={singUpFormInput}>
-              <InputField
-                type='text'
-                label='name'
-                rules={text}
-                control={control}
-                errors={errors}
-                variant='outlined'
-                disabled={isLoading}
-              />
+      <form onSubmit={handleSubmit(login)}>
+        <div className={singInForm}>
+          <h2>SignIn</h2>
+          <div className={singInFormActions}>
+            <div className={singInFormInput}>
               <AuthenticationInputs
                 control={control}
                 errors={errors}
                 disabled={isLoading}
               />
             </div>
-            <div className={singUpFormButton}>
+            <div className={singInFormButton}>
               <LoadingButton
                 type='submit'
                 variant='contained'
                 loading={isLoading}>
-                create account
+                login
               </LoadingButton>
             </div>
           </div>
