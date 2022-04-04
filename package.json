@@ -35,7 +35,7 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "test": "react-scripts test --passWithNoTests",
+    "test": "craco test --passWithNoTests",
     "eject": "react-scripts eject",
     "lint": "eslint \"src/**/*.ts*\"",
     "lint:fix": "npm run lint -- --fix"
