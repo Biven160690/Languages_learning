@@ -22,7 +22,7 @@ export const updateRepetitionConditions: NextReviewDueDate = (
       ? 6 * nextEasiness ** (nextConsecutiveCorrectAnswers - 1)
       : 1
   );
-  const msToNextReview = Date.now() + daysToNextReview * 86400000;
+  const msToNextReview = setTime(daysToNextReview);
 
   return {
     easiness: nextEasiness,
@@ -30,6 +30,9 @@ export const updateRepetitionConditions: NextReviewDueDate = (
     msToNextReview,
   };
 };
+
+const setTime = (daysToNextReview: number) =>
+  new Date().setHours(7, 0, 0, 0) + daysToNextReview * 86400000;
 
 const isAnswerCorrect = (rating: number): boolean => rating > 3;
 

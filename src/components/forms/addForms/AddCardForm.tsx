@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { AddCardFormButtons } from '../buttons/AddCardFormButtons';
 import { AddCardFormInputs } from '../inputs/AddCardFormInputs';
 
-import { useStyles } from '@theme/style';
+import { useStyles } from '../../../theme/style';
 
 import { NewCard } from '../type';
 
