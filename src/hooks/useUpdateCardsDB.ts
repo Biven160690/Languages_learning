@@ -36,12 +36,20 @@ type GetRepetitionCondition = (
   rating: string
 ) => void;
 
+interface RepetitionConditions {
+  cardData: RepetiCardsData;
+  rating: string;
+}
+
 export function useUpdateCardsDB(): UpdateCardsDB {
   const [status, setStatus] = useState<Status>();
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const [dataToUpdateDB, setDataToUpdateDB] = useState<DataToUpdateDB>({});
+
+  const [repetitionConditions, setRepetitionConditions] =
+    useState<RepetitionConditions>();
 
   const { deleteCard, addDeck, updateRepetitionsData } = useDataManagement();
 
@@ -50,9 +58,25 @@ export function useUpdateCardsDB(): UpdateCardsDB {
   const getRepetitionCondition: GetRepetitionCondition = (
     repetiCardsData,
     rating
-  ) => {
-    deckId && updateRepetitionsData(repetiCardsData, deckId, rating);
-  };
+  ) => setRepetitionConditions({ cardData: repetiCardsData, rating });
+
+  useEffect(() => {
+    if (deckId && repetitionConditions) {
+      updateRepetitionsData(
+        repetitionConditions.cardData,
+        deckId,
+        repetitionConditions.rating
+      )
+        .then((status) => {
+          setStatus(status);
+          setIsOpen(true);
+        })
+        .catch((status) => {
+          setStatus(status);
+          setIsOpen(true);
+        });
+    }
+  }, [deckId, repetitionConditions, updateRepetitionsData]);
 
   useEffect(() => {
     if (dataToUpdateDB.addDeck) {
