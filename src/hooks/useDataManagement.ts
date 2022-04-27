@@ -8,10 +8,9 @@ import {
   deleteDoc,
   query,
   where,
-  onSnapshot,
 } from 'firebase/firestore';
 
-import { useAuth } from '@hooks';
+import { useAuth, useCheckData } from '@hooks';
 
 import { updateRepetitionConditions } from '@helper';
 
@@ -21,29 +20,7 @@ import { RepetiCardsData } from '@helper/interface';
 export function useDataManagement() {
   const auth = useAuth();
 
-  const hasSuccessUserActions = (
-    path: string,
-    action: string
-  ): Promise<Status> => {
-    return new Promise<Status>((resolve, reject) => {
-      onSnapshot(
-        doc(db, path),
-        (querySnapshot) => {
-          (
-            action === 'delete'
-              ? !querySnapshot.exists()
-              : querySnapshot.exists()
-          )
-            ? resolve({
-                name: 'Success',
-                message: 'Successfully! Data was modified',
-              })
-            : reject(new Error('Error! Data was not modifed'));
-        },
-        (error) => reject(error)
-      );
-    });
-  };
+  const { hasSuccessUserActions, hasSuccessfulRating } = useCheckData();
 
   const addCard = useCallback(
     async ({ newCard, deckId }: AddCardProps): Promise<Status> => {
@@ -54,7 +31,7 @@ export function useDataManagement() {
 
       return hasSuccessUserActions(path, 'add');
     },
-    [auth.currentUser]
+    [auth.currentUser, hasSuccessUserActions]
   );
 
   const addDeck = useCallback(
@@ -64,7 +41,7 @@ export function useDataManagement() {
 
       return hasSuccessUserActions(path, 'add');
     },
-    [auth.currentUser]
+    [auth.currentUser, hasSuccessUserActions]
   );
 
   const deleteNestedCollections = useCallback(
@@ -97,7 +74,7 @@ export function useDataManagement() {
 
       return hasSuccessUserActions(path, 'delete');
     },
-    [auth.currentUser, deleteNestedCollections]
+    [auth.currentUser, deleteNestedCollections, hasSuccessUserActions]
   );
 
   const deleteCard = useCallback(
@@ -107,7 +84,7 @@ export function useDataManagement() {
 
       return hasSuccessUserActions(path, 'delete');
     },
-    [auth.currentUser]
+    [auth.currentUser, hasSuccessUserActions]
   );
 
   const getDecks = useCallback(async (): Promise<DataDeck[]> => {
@@ -140,18 +117,23 @@ export function useDataManagement() {
       { id, repetitionConditions }: RepetiCardsData,
       deckId: string,
       rating: string
-    ): Promise<void> => {
+    ): Promise<Status> => {
       const nextReviewDueDate = updateRepetitionConditions(
         repetitionConditions,
         +rating
       );
+      const path = `cardsDecks/${auth.currentUser}/decks/${deckId}/cards/${id}`;
+
       await setDoc(
-        doc(db, `cardsDecks/${auth.currentUser}/decks/${deckId}/cards/${id}`),
+        doc(db, path),
         { repetitionConditions: nextReviewDueDate },
         { merge: true }
       );
+
+      return hasSuccessfulRating(path);
     },
-    [auth.currentUser]
+
+    [auth.currentUser, hasSuccessfulRating]
   );
 
   const addUserDoc = useCallback(async (userId: string) => {
