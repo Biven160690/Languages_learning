@@ -16,27 +16,27 @@ interface InputFieldProps {
 export function InputField(props: InputFieldProps) {
   const { type, label, rules, control, errors, variant, disabled } = props;
 
-  const helperText = errors[label] && messageInform[label];
+  const rule = errors?.[label]?.type;
+
+  const helperText = rule && messageInform[label][rule];
 
   return (
-    <>
-      <Controller
-        render={({ field }) => (
-          <TextField
-            {...field}
-            type={type}
-            label={label}
-            variant={variant}
-            error={isValid(errors, label)}
-            disabled={disabled}
-            helperText={helperText}
-          />
-        )}
-        control={control}
-        rules={rules}
-        name={label}
-        defaultValue=''
-      />
-    </>
+    <Controller
+      render={({ field }) => (
+        <TextField
+          {...field}
+          type={type}
+          label={label}
+          variant={variant}
+          error={isValid(errors, label)}
+          disabled={disabled}
+          helperText={helperText}
+        />
+      )}
+      control={control}
+      rules={rules}
+      name={label}
+      defaultValue=''
+    />
   );
 }
