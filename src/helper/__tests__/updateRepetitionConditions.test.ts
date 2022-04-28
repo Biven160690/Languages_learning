@@ -13,22 +13,22 @@ describe('updateRepetitionConditions', () => {
   });
 
   it('user could learnt', () => {
-    const rating = 5;
+    const rating = 1;
 
     expect(
       updateRepetitionConditions(repetitionConditions, rating)
-    ).toHaveProperty('easiness', 2.6);
+    ).toHaveProperty('easiness', 1.96);
     expect(
       updateRepetitionConditions(repetitionConditions, rating)
     ).toHaveProperty('consecutiveCorrectAnswers', 1);
   });
 
   it('user could not learnt', () => {
-    const rating = 3;
+    const rating = 0;
 
     expect(
       updateRepetitionConditions(repetitionConditions, rating)
-    ).toHaveProperty('easiness', 2.36);
+    ).toHaveProperty('easiness', 1.7);
     expect(
       updateRepetitionConditions(repetitionConditions, rating)
     ).toHaveProperty('consecutiveCorrectAnswers', 0);
