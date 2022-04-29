@@ -26,7 +26,7 @@ interface UpdateCardsDB {
     rating: string
   ) => void;
   setDataToUpdateDB: React.Dispatch<React.SetStateAction<DataToUpdateDB>>;
-  status: Status | undefined;
+  status: Status;
   isOpen: boolean;
   setIsOpen: React.Dispatch<boolean>;
 }
@@ -42,7 +42,7 @@ interface RepetitionConditions {
 }
 
 export function useUpdateCardsDB(): UpdateCardsDB {
-  const [status, setStatus] = useState<Status>();
+  const [status, setStatus] = useState<Status>({ name: '', message: '' });
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 

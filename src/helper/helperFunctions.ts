@@ -1,7 +1,7 @@
 import { FieldError } from 'react-hook-form';
 
 import { NewCard, NewDeck } from '@components/forms/type';
-import { DataCard, DataDeck } from '@hooks/interface';
+import { DataCard, DataDeck, Status } from '@hooks/interface';
 import { InputProps } from './interface';
 
 type CreateInputsProps = (
@@ -20,6 +20,8 @@ type RemoveSelectedDeck = (deckId: string, decks: DataDeck[]) => DataDeck[];
 type ChangeFirstLetter = (form: string) => string;
 
 type RormatDate = (nextReviewDueDate: number) => string;
+
+type RedirectInDecks = (isOpen: boolean, status: Status | undefined) => boolean;
 
 const changeFirstLetter: ChangeFirstLetter = (form) =>
   form.replace(/(^\w{1})/, (letter) => letter.toUpperCase());
@@ -86,6 +88,9 @@ const formatDate: RormatDate = (nextReviewDueDate) => {
   }`;
 };
 
+const redirectInDecks: RedirectInDecks = (isOpen, status) =>
+  !isOpen && status?.name === 'Success';
+
 export {
   createInputsProps,
   createNewCard,
@@ -93,4 +98,5 @@ export {
   removeSelectedCard,
   removeSelectedDeck,
   formatDate,
+  redirectInDecks,
 };
