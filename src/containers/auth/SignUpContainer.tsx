@@ -2,14 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { NavigateFunction, useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { LoadingButton } from '@mui/lab';
-
 import { AuthenticationInputs } from '@components/forms/inputs/AuthenticationInputs';
 import { InputField } from '@components/forms/inputs/InputField';
 
 import { useDataManagement, useAuth } from '@hooks';
 import { useStyles } from '@theme/style';
 
-import { triggerAlert, text, setCurrentUser } from '@helper';
+import {
+  triggerAlert,
+  text,
+  setCurrentUser,
+  userAuthStatus,
+  redirectInDecks,
+} from '@helper';
 
 import { RegistrationData } from '@components/forms/type';
 import { Status } from '@hooks/interface';
@@ -34,8 +39,10 @@ export function SignUpContainer() {
     formState: { errors },
   } = useForm<RegistrationData>();
 
+  const { registeringSuccess, registeringError } = userAuthStatus;
+
   useEffect(() => {
-    !isOpen && status?.name === 'Success' && navigate('/decks');
+    redirectInDecks(isOpen, status) && navigate('/decks');
   }, [isOpen, navigate, status]);
 
   const dataManagement = useDataManagement();
@@ -47,15 +54,12 @@ export function SignUpContainer() {
       .then(({ user }) => {
         dataManagement.addUserDoc(user.uid);
         setIsOpen(true);
-        setStatus({
-          name: 'Success',
-          message: 'Successfully! You are registered',
-        });
+        setStatus(registeringSuccess);
         setCurrentUser('userId', user.uid);
       })
       .catch((error) => {
         setIsLoading(false);
-        setStatus(error);
+        setStatus(registeringError(error.code));
         setIsOpen(true);
       });
   }

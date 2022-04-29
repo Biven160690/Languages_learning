@@ -1,5 +1,4 @@
-import { Alert, AlertTitle, Snackbar } from '@mui/material';
-
+import { Alert, Snackbar } from '@mui/material';
 import { AlertProps } from '@hooks/interface';
 
 export const SuccessAlert = ({ status, isOpen, setIsOpen }: AlertProps) => {
@@ -9,14 +8,14 @@ export const SuccessAlert = ({ status, isOpen, setIsOpen }: AlertProps) => {
     <Snackbar
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       open={isOpen}
-      autoHideDuration={2000}
+      autoHideDuration={5000}
       onClose={handleCloseAlert}>
       <Alert
         aria-label='success'
         severity='success'
-        sx={{ width: '100%' }}
-        variant='filled'>
-        <AlertTitle>{status?.name + ':  ' + status?.message}</AlertTitle>
+        variant='filled'
+        onClose={handleCloseAlert}>
+        {status?.name + ':  ' + status?.message}
       </Alert>
     </Snackbar>
   );

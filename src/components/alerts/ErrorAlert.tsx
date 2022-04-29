@@ -1,4 +1,4 @@
-import { Alert, AlertTitle, Snackbar } from '@mui/material';
+import { Alert, Snackbar } from '@mui/material';
 
 import { AlertProps } from '@hooks/interface';
 
@@ -14,9 +14,9 @@ export const ErrorAlert = ({ status, isOpen, setIsOpen }: AlertProps) => {
       <Alert
         aria-label='error'
         severity='error'
-        sx={{ width: '100%' }}
-        variant='filled'>
-        <AlertTitle>{status?.name + ':  ' + status?.message}</AlertTitle>
+        variant='filled'
+        onClose={handleCloseAlert}>
+        {status?.name + ':  ' + status?.message}
       </Alert>
     </Snackbar>
   );

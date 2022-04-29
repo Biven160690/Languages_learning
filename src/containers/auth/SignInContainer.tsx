@@ -7,7 +7,12 @@ import { AuthenticationInputs } from '@components/forms/inputs/AuthenticationInp
 import { useAuth } from '@hooks';
 import { useStyles } from '@theme/style';
 
-import { triggerAlert, setCurrentUser } from '@helper';
+import {
+  triggerAlert,
+  setCurrentUser,
+  userAuthStatus,
+  redirectInDecks,
+} from '@helper';
 
 import { Status } from '@hooks/interface';
 import { LoginData } from '@components/forms/type';
@@ -29,8 +34,10 @@ export function SignInContainer() {
     formState: { errors },
   } = useForm<LoginData>();
 
+  const { loggingSuccess, loggingError } = userAuthStatus;
+
   useEffect(() => {
-    !isOpen && status?.name === 'Success' && navigate('/decks');
+    redirectInDecks(isOpen, status) && navigate('/decks');
   }, [isOpen, navigate, status]);
 
   const { singInForm, singInFormInput, singInFormButton, singInFormActions } =
@@ -42,18 +49,12 @@ export function SignInContainer() {
       .signIn(data)
       .then(({ user }) => {
         setIsOpen(true);
-        setStatus({
-          name: 'Success',
-          message: 'Successfully! You are logged in!',
-        });
+        setStatus(loggingSuccess);
         setCurrentUser('userId', user.uid);
       })
-      .catch(() => {
+      .catch((error) => {
         setIsLoading(false);
-        setStatus({
-          name: 'Error',
-          message: 'Error! User is not found',
-        });
+        setStatus(loggingError(error.code));
         setIsOpen(true);
       });
   }
